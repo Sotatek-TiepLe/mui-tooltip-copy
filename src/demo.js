@@ -3,22 +3,10 @@ import copy from 'copy-to-clipboard';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { isMobile } from 'react-device-detect';
 
 export default function TriggersTooltips() {
-  const [open, setOpen] = React.useState(false);
-  const [text, setText] = React.useState('text');
-  const [copied, setCopy] = useCopyClipboard(2000);
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    // alert('click')
-    setOpen(true);
-    setText('copyed');
-    setCopy('adfs');
-  };
+  const [copied, setCopy] = useCopyClipboard(1000);
 
   return (
     <div>
@@ -39,21 +27,14 @@ export default function TriggersTooltips() {
           </Tooltip>
         </Grid>
         <Grid item>
-          <ClickAwayListener onClickAway={handleTooltipClose}>
-            <div>
-              <Tooltip
-                PopperProps={{
-                  disablePortal: true,
-                }}
-                onClose={handleTooltipClose}
-                disableFocusListener
-                disableTouchListener
-                title={copied ? 'copied' : 'clip'}
-              >
-                <Button onClick={handleTooltipOpen}>Click</Button>
-              </Tooltip>
-            </div>
-          </ClickAwayListener>
+          <Tooltip
+            disableFocusListener
+            disableTouchListener
+            title={copied || isMobile ? 'copied' : 'clip'}
+            {...(isMobile && { open: copied })}
+          >
+            <Button onClick={() => setCopy('content ..... abc')}>Click</Button>
+          </Tooltip>
         </Grid>
       </Grid>
     </div>
