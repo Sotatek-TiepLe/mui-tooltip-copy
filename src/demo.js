@@ -14,6 +14,7 @@ export default function TriggersTooltips() {
   };
 
   const handleTooltipOpen = () => {
+    // alert('click')
     setOpen(true);
     setText('copyed');
     setCopy('adfs');
